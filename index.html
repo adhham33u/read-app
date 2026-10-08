@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://yximhtxfleutvalddvno.supabase.co; media-src 'self' blob: https:; connect-src https://yximhtxfleutvalddvno.supabase.co wss://yximhtxfleutvalddvno.supabase.co; frame-src 'none'; object-src 'none'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0b1020">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="القارئ">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="robots" content="noindex,nofollow">
+<style id="fb">html{display:none!important}</style>
+<script>if(self===top){var e=document.getElementById("fb");if(e)e.remove()}else{try{top.location=self.location}catch(x){}}</script>
+<title>القارئ</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;600&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#0b1020;--s1:#131a30;--s2:#1c2542;--line:#ffffff12;--ink:#eef0fb;--mute:#8f98b8;--lime:#b57cff;--limeink:#1a0b2b;--ease:cubic-bezier(.2,.9,.25,1);padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Arabic','Readex Pro',Tahoma,Arial,sans-serif;line-height:1.65;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 30% at 100% 0,#b57cff14,transparent),radial-gradient(50% 30% at 0 100%,#ff7ac812,transparent)}
+@keyframes up{from{opacity:0;transform:translate3d(0,18px,0) scale(.98)}to{opacity:1;transform:none}}
+@keyframes zoom{to{transform:scale(1.07)}}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:#0b1020cc;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:12px 16px 10px;display:grid;gap:10px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;font-size:20px;letter-spacing:-.5px;display:flex;align-items:center;gap:6px}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--lime);box-shadow:0 0 14px var(--lime)}
+.x{background:var(--s2);border:0;color:var(--mute);font:600 12px inherit;font-family:inherit;cursor:pointer;border-radius:20px;padding:7px 14px;transition:.25s}.x:active{transform:scale(.93)}
+.sw{position:relative}
+.sw svg{position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);color:var(--mute)}
+header input{width:100%;margin:0;border-radius:18px;padding:12px 16px 12px 16px;padding-inline-start:44px;background:var(--s1);border:1px solid var(--line)}
+header input:focus{border-color:var(--lime);background:var(--s2)}
+nav{position:fixed;bottom:calc(10px + env(safe-area-inset-bottom,0px));inset-inline:16px;max-width:380px;margin-inline:auto;z-index:6;background:#131a30ee;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:26px;display:flex;justify-content:space-around;padding:8px 10px;box-shadow:0 18px 50px #000c}
+nav button{background:none;border:0;color:var(--mute);font:600 11px inherit;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:0 14px;transition:color .3s}
+nav button b{display:grid;place-items:center;width:52px;height:32px;border-radius:16px;transition:background .35s var(--ease),transform .25s}
+nav button:active b{transform:scale(.88)}
+nav button.on{color:var(--ink)}nav button.on b{background:var(--lime);color:var(--limeink)}
+main{max-width:920px;margin:0 auto;padding:10px 16px 130px}
+main>*{animation:up .6s var(--ease) both}
+main>*:nth-child(2){animation-delay:.07s}main>*:nth-child(3){animation-delay:.14s}main>*:nth-child(n+4){animation-delay:.2s}
+h2{font-size:20px;margin:28px 2px 12px;font-weight:700;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+h2::before{content:"";width:6px;height:18px;border-radius:3px;background:var(--lime)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{border:1px solid var(--line);background:var(--s1);color:var(--mute);border-radius:14px;padding:8px 18px;font:600 13px inherit;font-family:inherit;white-space:nowrap;cursor:pointer;transition:.3s var(--ease)}
+.chips button.on{background:var(--lime);color:var(--limeink);border-color:var(--lime)}
+.hero{position:relative;border-radius:32px;min-height:min(64vh,460px);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;border:1px solid var(--line)}
+.hero .bg,.ban .bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:-2;animation:zoom 24s ease-in-out infinite alternate;will-change:transform}
+.hero::after,.ban::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#0b1020 2%,#0b1020cc 35%,transparent 75%)}
+.hero .in{width:100%;padding:24px 22px}
+.hero h1{margin:10px 0 8px;font-size:clamp(30px,8vw,46px);line-height:1.15;font-weight:700;letter-spacing:-1px}
+.hero p{margin:0 0 18px;color:#cdd3ea;font-size:14px;max-width:480px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pill{display:inline-block;background:#ffffff1a;backdrop-filter:blur(8px);border-radius:12px;padding:3px 12px;font-size:12px;font-weight:600;margin-inline-end:6px}
+.acts{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fab{width:62px;height:62px;border-radius:50%;border:0;background:var(--lime);color:var(--limeink);font-size:22px;cursor:pointer;display:grid;place-items:center;box-shadow:0 10px 30px #b57cff55;transition:transform .3s var(--ease)}
+.fab:active{transform:scale(.9)}
+.gh{border:1px solid #ffffff30;background:#ffffff12;color:var(--ink);border-radius:30px;padding:14px 22px;font:600 14px inherit;font-family:inherit;cursor:pointer;backdrop-filter:blur(8px);transition:transform .25s}.gh:active{transform:scale(.94)}
+.row{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.row::-webkit-scrollbar{display:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px}
+.pc{flex:none;width:142px;cursor:pointer;background:none;border:0;color:inherit;font:inherit;text-align:right;padding:0;scroll-snap-align:start;animation:up .6s var(--ease) both;animation-delay:calc(var(--i,0)*55ms)}
+.grid .pc{width:auto}
+.po{aspect-ratio:3/4;border-radius:26px;background-size:cover;background-position:center;display:grid;place-items:center;font-size:44px;font-weight:700;color:#fff;border:1px solid var(--line);position:relative;overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s;will-change:transform}
+.po::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#000a,transparent 45%)}
+.po i{position:absolute;bottom:10px;inset-inline:12px;height:4px;border-radius:3px;background:#ffffff30;z-index:1;overflow:hidden}
+.po i::after{content:"";position:absolute;inset:0;width:var(--w);background:var(--lime);border-radius:3px}
+.pc:active .po{transform:scale(.94)}
+@media(hover:hover){.pc:hover .po{transform:translateY(-6px);box-shadow:0 20px 40px #000b}}
+.pc b{display:block;margin-top:9px;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc small{color:var(--mute);font-size:12px}
+.wc{flex:none;width:236px;aspect-ratio:16/10;border-radius:24px;background-size:cover;background-position:center;position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--line);scroll-snap-align:start;transition:transform .3s var(--ease)}
+.wc:active{transform:scale(.96)}
+.wc::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#000d,transparent 65%)}
+.wc div{position:absolute;bottom:14px;inset-inline:14px;z-index:1;font-weight:600;font-size:14px}
+.wc i{position:absolute;bottom:0;inset-inline:0;height:4px;background:#ffffff25;z-index:1}.wc i::after{content:"";position:absolute;inset:0;width:var(--w);background:var(--lime)}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:26px;padding:18px;margin-bottom:12px}
+.mute{color:var(--mute);font-size:13px}
+.btn{display:block;width:100%;background:var(--lime);color:var(--limeink);border:0;border-radius:18px;padding:15px;font:700 15px inherit;font-family:inherit;margin-top:12px;cursor:pointer;text-align:center;text-decoration:none;transition:transform .2s var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn.g{background:var(--s2);color:var(--ink)}.btn.r{background:#2a1517;color:#ff8f93}
+.btn.s{display:inline-block;width:auto;padding:9px 18px;font-size:13px;margin:8px 0 0 8px;border-radius:14px}
+input,select,textarea{width:100%;font:15px inherit;font-family:inherit;padding:13px 15px;border:1px solid var(--line);border-radius:16px;background:#0e1428;color:var(--ink);margin:4px 0;transition:border-color .25s;outline:0}
+input:focus,select:focus,textarea:focus{border-color:var(--lime)}
+label{font-size:13px;font-weight:600;color:var(--mute)}
+.list{background:var(--s1);border:1px solid var(--line);border-radius:26px;overflow:hidden}
+.li{display:flex;align-items:center;gap:14px;padding:14px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .25s}
+.li:last-child{border:0}.li:active{background:#ffffff0a}.li .grow{flex:1;min-width:0}.li h3{margin:0;font-size:15px}
+.av{width:36px;height:36px;border-radius:50%;border:0;background:var(--lime);color:var(--limeink);font:700 15px inherit;font-family:inherit;cursor:pointer;transition:transform .25s}.av:active{transform:scale(.9)}
+.avl{width:84px;height:84px;border-radius:50%;background:var(--lime);color:var(--limeink);font-size:36px;font-weight:700;display:grid;place-items:center;margin:0 auto;box-shadow:0 10px 30px #b57cff44}
+.rs{display:flex;align-items:center;justify-content:space-between;gap:10px;border-color:#b57cff55;background:linear-gradient(135deg,#b57cff14,transparent)}
+.xit{position:absolute;top:12px;inset-inline-start:12px;z-index:2;background:#000a;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid #fff2;color:#fff;border-radius:20px;padding:7px 14px;font:600 13px inherit;font-family:inherit;cursor:pointer;transition:transform .2s}.xit:active{transform:scale(.92)}
+.av,.avl{overflow:hidden;padding:0}
+.av2{flex:none;width:38px;height:38px;border-radius:50%;background:var(--lime);color:var(--limeink);display:grid;place-items:center;font-weight:700;overflow:hidden}
+.cmi{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.cmi:last-child{border:0}
+.cmb{flex:1;min-width:0}
+.cmt-body{white-space:pre-wrap;word-break:break-word;font-size:14px;margin-top:2px}
+.stk{font-size:46px;line-height:1.25;margin-top:2px}
+.spl{margin-top:6px;background:#ffffff0d;border:1px dashed #ffffff30;color:var(--mute);border-radius:12px;padding:10px 12px;font:600 12.5px inherit;font-family:inherit;cursor:pointer;width:100%;text-align:right}
+.skp{display:flex;gap:6px;flex-wrap:wrap}.skp button{font-size:24px;background:var(--s2);border:1px solid transparent;border-radius:12px;padding:3px 8px;cursor:pointer;transition:transform .2s}.skp button:active{transform:scale(.88)}.skp button.on{border-color:var(--lime);background:var(--s1)}
+.ann{margin:4px 0 14px;display:grid;gap:10px}
+.an{background:var(--s1);border:1px solid var(--line);border-radius:20px;padding:14px 16px}
+.an.pin{border-color:var(--lime);background:linear-gradient(135deg,#ffffff0d,transparent)}
+.ab{white-space:pre-wrap;font-size:14px;margin-top:6px;word-break:break-word}
+.inst{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom,0px));inset-inline:0;margin-inline:auto;width:max-content;max-width:90%;z-index:25;background:var(--lime);color:var(--limeink);border:0;border-radius:24px;padding:10px 20px;font:700 14px inherit;font-family:inherit;box-shadow:0 10px 30px #000a;animation:up .4s both;cursor:pointer}
+.inst small{display:block;font-weight:500;font-size:11px;opacity:.8}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.tl{background:var(--s1);border:1px solid var(--line);border-radius:22px;padding:14px;text-align:center}
+.tl b{display:block;font-size:20px}.tl span{color:var(--mute);font-size:12px}
+.ban{position:relative;border-radius:32px;aspect-ratio:4/3;max-height:420px;width:100%;display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;border:1px solid var(--line)}
+.ban .in{padding:22px;width:100%}.ban h1{margin:8px 0 0;font-size:clamp(26px,7vw,38px);line-height:1.15;letter-spacing:-.8px}
+.eps{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:10px}
+.ep{position:relative;aspect-ratio:1;border-radius:20px;border:1px solid var(--line);background:var(--s1);color:var(--ink);font:700 18px inherit;font-family:inherit;cursor:pointer;display:grid;place-items:center;overflow:hidden;transition:transform .25s var(--ease),background .3s;flex:none;min-width:58px}
+.ep:active{transform:scale(.9)}.ep.on{background:var(--lime);color:var(--limeink);border-color:var(--lime)}
+.ep.done::after{content:"✓";position:absolute;top:5px;inset-inline-end:8px;font-size:11px;color:var(--lime)}.ep.on.done::after{color:var(--limeink)}
+.ep i{position:absolute;bottom:0;inset-inline:0;height:4px;background:#ffffff1a}.ep i::after{content:"";position:absolute;inset:0;width:var(--w);background:var(--lime)}
+.strip{display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}.strip::-webkit-scrollbar{display:none}
+video,iframe{width:100%;border-radius:26px;background:#000;border:0;aspect-ratio:16/9;box-shadow:0 24px 70px #000d,0 0 0 1px var(--line)}
+.tg{aspect-ratio:auto!important;height:560px;background:#fff}
+.auth{text-align:center;padding:30px 4px 0}.auth h1{font-size:34px;margin:6px 0;letter-spacing:-1px}
+.toast{position:fixed;bottom:104px;left:50%;transform:translateX(-50%);background:var(--lime);color:var(--limeink);padding:11px 22px;border-radius:30px;z-index:30;max-width:90%;font-weight:700;animation:up .3s var(--ease) both;box-shadow:0 12px 30px #000a}
+.ov{position:fixed;inset:0;background:#000c;backdrop-filter:blur(8px);z-index:40;display:grid;place-items:center;padding:20px;animation:up .25s both}.ov .card{max-width:340px;width:100%;margin:0}
+.rw{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tag{display:inline-block;background:#ffffff14;border-radius:12px;padding:3px 12px;font-size:12px;font-weight:600}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.32s}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.rd header,.rd nav{display:none}
+.rd main{padding:0 0 40px;max-width:760px}
+.rbar{position:sticky;top:0;z-index:7;display:flex;align-items:center;gap:8px;padding:10px 12px;background:#0b1020ee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.rbar b{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rb{background:var(--s2);border:0;color:var(--ink);border-radius:12px;min-width:38px;height:36px;font:700 14px inherit;font-family:inherit;cursor:pointer;padding:0 10px}.rb:active{transform:scale(.92)}
+.nv{padding:26px 22px 40px;line-height:2;font-family:'Noto Naskh Arabic','IBM Plex Sans Arabic',serif;text-align:justify;min-height:80vh}
+.nv p{margin:0 0 1.1em}
+.pg img{display:block;width:100%;height:auto;background:#111;min-height:120px}
+.pgd{display:grid;place-items:center;min-height:78vh;background:#000;cursor:pointer}.pgd img{max-width:100%;max-height:86vh;object-fit:contain}
+.pn{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px}
+.logo{display:flex;align-items:center;gap:8px}
+.lw{display:block;font-family:'Aref Ruqaa','Reem Kufi',serif;font-weight:700;font-size:30px;line-height:1.15;background:linear-gradient(90deg,#b57cff,#ff7ac8);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 10px #b57cff55)}
+.fl{display:block;margin-top:1px}
+.auth .logo{justify-content:center;margin:22px 0 26px;transform:scale(1.45);transform-origin:center}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+@media(min-width:640px){.g3{grid-template-columns:repeat(5,1fr)}}
+.wk{background:var(--s1);border:1px solid var(--line);border-radius:14px;overflow:hidden;padding:0;color:inherit;font:inherit;text-align:right;cursor:pointer;animation:up .55s var(--ease) both;animation-delay:calc(var(--i,0)*40ms);transition:transform .3s var(--ease)}
+.wk:active{transform:scale(.96)}
+.cv{position:relative;aspect-ratio:18/25;background-size:cover;background-position:center;display:grid;place-items:center;font-size:36px;font-weight:700;color:#fff}
+.cv em{position:absolute;top:6px;inset-inline-end:6px;font-style:normal;font-size:15px;background:#0009;border-radius:7px;padding:0 5px;line-height:22px;border:1px solid #fff3;backdrop-filter:blur(4px)}
+.wi{padding:7px 8px 8px}.wi b{display:block;font-size:12.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wm{display:flex;justify-content:space-between;gap:4px;margin-top:5px;font-size:11.5px;color:var(--mute)}
+.wm .st{color:var(--lime);font-weight:700;white-space:nowrap}
+.row .wk{flex:none;width:112px}
+.stars{display:flex;gap:2px;direction:ltr}.sb{background:none;border:0;font-size:28px;color:#ffffff30;cursor:pointer;padding:2px;transition:transform .2s}.sb:active{transform:scale(.8)}.sb.on{color:var(--lime)}
+.cn{display:flex;gap:10px;padding:16px}.cn .btn{margin:0;flex:1}
+</style>
+</head>
+<body>
+<header id="hd"></header><main id="app"></main><nav id="nav"></nav>
+<script>
+const SB_URL='https://yximhtxfleutvalddvno.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4aW1odHhmbGV1dHZhbGRkdm5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5NzA0NzIsImV4cCI6MjEwNjU0NjQ3Mn0.9cwrI1fV2OBlPjaBf22AtMOI3_Ry3cii_nvxgxP14HQ';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let sb,session=null,works=[],chs=[],view='home',arg=null,q='',mode='in',asec='w',cat=null,openW=null,selW=null,favs=[],PG={},ST=ls.get('rst',{size:19,theme:'dark',mode:'v'});
+const LOGO=`<div class="logo"><svg viewBox="0 0 56 44" width="44" height="36" aria-hidden="true"><defs><linearGradient id="lg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#b57cff"/><stop offset="1" stop-color="#ff7ac8"/></linearGradient></defs><path d="M28 12C21 7 10 7 3 10v26c7-3 18-3 25 1 7-4 18-4 25-1V10c-7-3-18-3-25 2z" fill="url(#lg)" fill-opacity=".18" stroke="url(#lg)" stroke-width="2.4" stroke-linejoin="round"/><path d="M28 12v25" stroke="url(#lg)" stroke-width="2.4"/><path d="M9 16c5-1.5 11-1 15 1.4M9 22c5-1.5 11-1 15 1.4M47 16c-5-1.5-11-1-15 1.4M47 22c-5-1.5-11-1-15 1.4" stroke="url(#lg)" stroke-width="1.6" stroke-linecap="round" opacity=".7" fill="none"/><path d="M28 0l2.2 5.3 5.3 2.2-5.3 2.2L28 15l-2.2-5.3-5.3-2.2 5.3-2.2z" fill="url(#lg)"/></svg><div><span class="lw">القارئ</span><svg class="fl" viewBox="0 0 120 8" width="98" height="7" aria-hidden="true"><path d="M2 4Q16 0 30 4T58 4T86 4T118 4" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/><circle cx="60" cy="4" r="2.3" fill="#ff7ac8"/></svg></div></div>`;
+const FLAG={novel:'📖',manga:'🇯🇵',manhwa:'🇰🇷',manhua:'🇨🇳'};
+let RT={},LST={};
+const KIND={novel:'رواية',manga:'مانجا',manhwa:'مانهوا',manhua:'مانها'};
+const em=u=>u+'@learnwithus.app',pub=p=>sb.storage.from('reader').getPublicUrl(p).data.publicUrl;
+const cssUrl=u=>String(u).replace(/['"()\\\s]/g,c=>encodeURIComponent(c));
+const hue=s=>{let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))%360;return h};
+const nf=n=>Number.isInteger(+n)?String(+n):String(+(+n).toFixed(2));
+const numSort=(a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true});
+const ext=f=>(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),Math.max(2200,m.length*110))}
+function yes(msg,fn,lbl){const o=document.createElement('div');o.className='ov';o.innerHTML=`<div class="card"><h3>${esc(msg)}</h3><div class="rw"><button class="btn r" id="y1">${esc(lbl||'نعم، احذف')}</button><button class="btn g" id="y2">إلغاء</button></div></div>`;document.body.append(o);o.querySelector('#y1').onclick=()=>{o.remove();fn()};o.querySelector('#y2').onclick=()=>o.remove()}
+const chOf=w=>chs.filter(c=>c.work_id===w.id).sort((a,b)=>a.num-b.num);
+const inProg=c=>PG[c.id]&&!PG[c.id].done&&PG[c.id].pos>0.02;
+const doneChs=()=>chs.filter(c=>PG[c.id]&&PG[c.id].done);
+async function load(){try{await loadAnn();
+ const a=await sb.from('rd_works').select('*').order('created_at',{ascending:false}),b=await sb.from('rd_chapters').select('id,work_id,num,title,pages,created_at').order('num');
+ if(a.error||b.error)throw 1;works=a.data;chs=b.data;
+ PG={...ls.get('rpg_'+session.id,{})};const ll=await sb.from('rd_lists').select('work_id,status').eq('user_id',session.id);LST={};(ll.data||[]).forEach(x=>{(LST[x.work_id]=LST[x.work_id]||[]).push(x.status)});syncFavs();
+ const rr=await sb.from('rd_ratings').select('work_id,score,user_id');RT={};(rr.data||[]).forEach(x=>{const o=RT[x.work_id]||(RT[x.work_id]={sum:0,n:0,mine:0});o.sum+=x.score;o.n++;if(x.user_id===session.id)o.mine=x.score});const c=await sb.from('rd_progress').select('chapter_id,pos,done,updated_at').eq('user_id',session.id);
+ (c.data||[]).forEach(x=>{const ts=Date.parse(x.updated_at);if(!PG[x.chapter_id]||PG[x.chapter_id].ts<ts)PG[x.chapter_id]={pos:x.pos,done:x.done,ts}})}catch(e){toast('تعذر تحميل المحتوى')}}
+function setPg(id,pos,done,force){const n=Date.now(),o=PG[id];PG[id]={pos,done:!!(done||(o&&o.done)),ts:n};ls.set('rpg_'+session.id,PG);const L=setPg.L||(setPg.L={});
+ if(force||!L[id]||n-L[id]>15000){L[id]=n;sb.from('rd_progress').upsert({user_id:session.id,chapter_id:id,pos,done:PG[id].done,updated_at:new Date(n).toISOString()}).then(()=>{})}}
+async function startSession(u){const {data:p}=await sb.from('profiles').select('*').eq('id',u.id).maybeSingle();
+ if(!p){await sb.auth.signOut();return false}session={id:u.id,u:p.username,name:p.full_name,admin:p.is_admin};await secState(u.id);if(session.blocked)return true;
+ favs=[];await load();return true}
+async function boot(){sb=supabase.createClient(SB_URL,SB_KEY);const {data}=await sb.auth.getSession();if(data.session)await startSession(data.session.user);render()}
+/* auth */
+function authV(){const r=mode==='up';$('#app').innerHTML=`<div class="auth">${LOGO}<h1>${r?'أهلاً بيك 👋':'مرحبًا بعودتك'}</h1><div class="mute" style="margin-bottom:18px">${r?'أنشئ حسابك وابدأ القراءة':'سجّل الدخول لمتابعة قراءتك'}</div></div><div class="card">
+ ${r?'<label>الاسم</label><input id="an">':''}<label>اسم المستخدم (حروف إنجليزية وأرقام)</label><input id="au" dir="ltr" autocapitalize="none">
+ <label>كلمة المرور</label><input id="ap" type="password" dir="ltr">${r?'<label>تأكيد كلمة المرور</label><input id="ap2" type="password" dir="ltr">':''}
+ <button class="btn" onclick="${r?'signup()':'login()'}">${r?'إنشاء الحساب':'دخول'}</button>
+ <button class="btn g" onclick="mode='${r?'in':'up'}';authV()">${r?'عندي حساب':'مستخدم جديد؟'}</button></div>`}
+async function signup(){const n=$('#an').value.trim(),u=$('#au').value.trim().toLowerCase(),p=$('#ap').value;
+ if(n.length<2)return toast('اكتب اسمك');if(!/^[a-z0-9._-]{3,30}$/.test(u))return toast('اسم المستخدم: 3 حروف إنجليزية/أرقام على الأقل');
+ if(!pwOk(p)||p.toLowerCase()===u)return toast(PWMSG);if(p!==$('#ap2').value)return toast('كلمتا المرور غير متطابقتين');
+ const {error}=await sb.auth.signUp({email:em(u),password:p,options:{data:{username:u,full_name:n}}});
+ if(error&&/registered|exists|database error/i.test(error.message))return toast('اسم المستخدم مستخدم، اختر اسمًا آخر');
+ const si=await sb.auth.signInWithPassword({email:em(u),password:p});if(si.error)return toast('تعذر إنشاء الحساب: '+(error?error.message:si.error.message));
+ if(!(await startSession(si.data.user)))return incomplete();render()}
+const LK={g(){return ls.get('lk',{n:0,t:0})},fail(){const o=this.g();o.n++;o.t=Date.now();ls.set('lk',o)},ok(){ls.set('lk',{n:0,t:0})},left(){const o=this.g();if(o.n<5)return 0;const w=Math.min(900000,30000*Math.pow(2,o.n-5));return Math.max(0,o.t+w-Date.now())}};
+const pwOk=p=>p.length>=8&&p.length<=72&&/[A-Za-z\u0600-\u06FF]/.test(p)&&/\d/.test(p);
+const PWMSG='كلمة المرور 8 أحرف على الأقل وتحتوي على حروف وأرقام';
+async function login(){const lk=LK.left();if(lk)return toast('محاولات كثيرة، حاول بعد '+Math.ceil(lk/1000)+' ثانية');
+ const {data,error}=await sb.auth.signInWithPassword({email:em($('#au').value.trim().toLowerCase()),password:$('#ap').value});
+ if(error){LK.fail();return toast('اسم المستخدم أو كلمة المرور غير صحيحة')}LK.ok();if(!(await startSession(data.user)))return incomplete();render()}
+async function logout(){await sb.auth.signOut();session=null;PG={};LST={};favs=[];CMT=null;view='home';render()}
+/* shell */
+const IC={home:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>',heart:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z"/></svg>',admin:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>',search:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>'};
+function go(v,a){window.onscroll=null;view=v;arg=a??null;render()}
+function render(){
+ const run=()=>{document.body.classList.toggle('rd',view==='read'&&!!session);
+  if(!session){$('#nav').style.display='none';$('#hd').innerHTML='<div class="top">'+LOGO+'</div>';return authV()}
+  $('#nav').style.display='';
+  $('#hd').innerHTML=`<div class="top">${LOGO}<div style="display:flex;gap:8px;align-items:center"><button class="av" onclick="go('account')" aria-label="حسابي">${avH(session.name,session.avatar)}</button><button class="x" onclick="logout()">خروج</button></div></div><div class="sw">${IC.search}<input id="sq" placeholder="ابحث عن رواية أو مانجا..." value="${esc(q)}" oninput="q=this.value;if(view!=='search')view='search';searchV()"></div>`;
+  const tabs=[['home','home','الرئيسية'],['mylist','heart','مكتبتي']];if(session.admin)tabs.push(['admin','admin','الإدارة']);
+  $('#nav').innerHTML=tabs.map(([k,i,n])=>`<button class="${view===k||(view==='work'&&k==='home')?'on':''}" onclick="go('${k}')"><b>${IC[i]}</b>${n}</button>`).join('');
+  if(view==='title'||view==='work'){if(CMT!==arg){CMT=arg;CMS=[];loadComments(arg)}}else CMT=null;
+  (session.blocked?blockedV:({home:homeV,work:workV,read:readV,mylist:myV,account:accountV,search:searchV,admin:adminV})[view])();scrollTo({top:0,behavior:'instant'})};
+ if(document.startViewTransition&&session)document.startViewTransition(run);else run()}
+const poster=w=>w.cover_path?`background-image:url('${cssUrl(pub(w.cover_path))}')`:`background:linear-gradient(135deg,hsl(${hue(w.name)} 60% 35%),hsl(${(hue(w.name)+50)%360} 60% 20%))`;
+const lastNum=w=>{const l=chOf(w);return l.length?nf(l[l.length-1].num):'0'};
+const avg=w=>{const r=RT[w.id];return r&&r.n?Math.round(r.sum/r.n*100)/100:0};
+const card=(w,i=0)=>`<button class="wk" style="--i:${Math.min(i,12)}" onclick="go('work','${w.id}')"><div class="cv" style="${poster(w)}">${w.cover_path?'':esc(w.name[0])}<em>${FLAG[w.kind]}</em></div><div class="wi"><b>${esc(w.name)}</b><div class="wm"><span>الفصل - ${lastNum(w)}</span><span class="st">${avg(w)} ★</span></div></div></button>`;
+const target=w=>{const l=chOf(w);return l.filter(inProg).sort((a,b)=>PG[b.id].ts-PG[a.id].ts)[0]||l.find(c=>!(PG[c.id]&&PG[c.id].done))||l[0]};
+function homeV(){
+ if(!works.length){$('#app').innerHTML=`<div class="card" style="text-align:center;padding:44px 20px"><div style="font-size:52px">📚</div><h3>لا يوجد محتوى بعد</h3><div class="mute">${session.admin?'ابدأ من تبويب الإدارة وأضف أول عمل.':'سيظهر المحتوى هنا عندما يضيفه المشرف.'}</div></div>`;return}
+ const cont=chs.filter(inProg).sort((a,b)=>PG[b.id].ts-PG[a.id].ts).slice(0,10),kinds=Object.keys(KIND).filter(k=>works.some(w=>w.kind===k));
+ const chips=`<div class="chips"><button class="${cat?'':'on'}" onclick="cat=null;homeV()">الكل</button>${kinds.map(k=>`<button class="${cat===k?'on':''}" onclick="cat='${k}';homeV()">${FLAG[k]} ${KIND[k]}</button>`).join('')}</div>`;
+ const vis=works.filter(w=>!inList(w.id,'notwant')),l=cat?vis.filter(w=>w.kind===cat):vis;
+ $('#app').innerHTML=`${!cat?annBlock():''}${chips}${!cat&&cont.length?`<h2>أكمل القراءة</h2><div class="row">${cont.map(c=>{const w=works.find(x=>x.id===c.work_id);return `<div class="wc" style="${poster(w)}" onclick="go('read','${c.id}')"><div>${esc(w.name)} · الفصل ${nf(c.num)}<br><span style="color:var(--lime);font-size:12px">أكمل ▶ · ${Math.round(PG[c.id].pos*100)}%</span></div><i style="--w:${Math.round(PG[c.id].pos*100)}%"></i></div>`}).join('')}</div>`:''}${!cat&&works.some(w=>inList(w.id,'now'))?`<h2>أقرأها الآن</h2><div class="row">${works.filter(w=>inList(w.id,'now')).map((w,i)=>card(w,i)).join('')}</div>`:''}<h2>${cat?KIND[cat]:'الرئيسية'}</h2><div class="g3">${l.map((w,i)=>card(w,i)).join('')}</div>`}
+function searchV(){const s=q.trim().toLowerCase(),r=works.filter(w=>(w.name+' '+w.category+' '+KIND[w.kind]+' '+(w.descr||'')).toLowerCase().includes(s));
+ $('#nav').querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+ $('#app').innerHTML=`<h2>نتائج البحث</h2>${r.length?`<div class="g3">${r.map((w,i)=>card(w,i)).join('')}</div>`:'<div class="card mute">لا توجد نتائج.</div>'}`}
+const LS_NAMES={fav:['❤️','المفضلة'],now:['📖','أقرأها الآن'],later:['🕒','قراءة لاحقًا'],cont:['⏸','أكملها لاحقًا'],want:['👍','أرغب بالقراءة'],notwant:['🚫','لا أرغب بالقراءة']};
+const inList=(id,s)=>(LST[id]||[]).includes(s);
+function syncFavs(){favs=Object.keys(LST).filter(id=>inList(id,'fav'))}
+async function toggleList(id,st){const on=inList(id,st);
+ const {error}=on?await sb.from('rd_lists').delete().eq('user_id',session.id).eq('work_id',id).eq('status',st):await sb.from('rd_lists').insert({user_id:session.id,work_id:id,status:st});
+ if(error)return toast('تعذر التحديث');
+ LST[id]=on?(LST[id]||[]).filter(x=>x!==st):[...(LST[id]||[]),st];syncFavs();
+ toast(on?'تمت الإزالة من '+LS_NAMES[st][1]:'تمت الإضافة إلى '+LS_NAMES[st][1]);if(view==='work')workV();else if(view==='mylist')myV()}
+const fav=id=>toggleList(id,'fav');
+let lib='fav';
+function myV(){const keys=Object.keys(LS_NAMES),cnt=k=>works.filter(w=>inList(w.id,k)).length,l=works.filter(w=>inList(w.id,lib));
+ $('#app').innerHTML=`<h2>مكتبتي</h2><div class="chips">${keys.map(k=>`<button class="${lib===k?'on':''}" onclick="lib='${k}';myV()">${LS_NAMES[k][0]} ${LS_NAMES[k][1]} (${cnt(k)})</button>`).join('')}</div>${l.length?`<div class="g3">${l.map((w,i)=>card(w,i)).join('')}</div>`:`<div class="card mute">القائمة فاضية. افتح أي عمل واضغط على "${LS_NAMES[lib][1]}".</div>`}`}
+/* work */
+function workV(){const w=works.find(x=>x.id===arg);if(!w)return go('home');const l=chOf(w),tg=target(w),pp=tg&&PG[tg.id],rs=tg&&inProg(tg),dn=l.filter(c=>PG[c.id]&&PG[c.id].done).length;
+ const tile=c=>{const p=PG[c.id],d=p&&p.done,pc=p&&!d?Math.round(p.pos*100):0;return `<button class="ep${d?' done':''}" onclick="go('read','${c.id}')" title="${esc(c.title||'')}">${nf(c.num)}${pc>2?`<i style="--w:${pc}%"></i>`:''}</button>`};
+ $('#app').innerHTML=`<div style="margin:4px 0 12px"><button class="gh" style="background:var(--s2);padding:10px 20px" onclick="go('home')">✕ خروج للرئيسية</button></div><div class="ban"><button class="xit" onclick="go('home')" aria-label="خروج للرئيسية">✕ خروج</button><div class="bg" style="${poster(w)}"></div><div class="in"><span class="pill">${KIND[w.kind]}</span><span class="pill">${esc(w.category)}</span><h1>${esc(w.name)}</h1></div></div>
+ <div class="acts" style="margin:16px 2px">${tg?`<button class="fab" onclick="go('read','${tg.id}')" aria-label="قراءة">▶</button>`:''}${session.admin?`<button class="gh" style="background:#2a1517;color:#ff8f93" onclick="asec='m';openW='${w.id}';go('admin')">🗑 حذف فصول</button>`:''}</div>
+ <div class="chips" style="margin:0 0 8px">${Object.keys(LS_NAMES).map(s=>`<button class="${inList(w.id,s)?'on':''}" onclick="toggleList('${w.id}','${s}')">${LS_NAMES[s][0]} ${LS_NAMES[s][1]}</button>`).join('')}</div>
+ ${rs?`<div class="card rs"><div><b>توقفت عند الفصل ${nf(tg.num)}</b><div class="mute">أنهيت ${Math.round(pp.pos*100)}% منه</div></div><button class="btn s" style="margin:0" onclick="go('read','${tg.id}')">أكمل ▶</button></div>`:''}
+ <div class="tiles"><div class="tl"><b>${l.length}</b><span>فصل</span></div><div class="tl"><b>${dn}</b><span>قرأتها</span></div><div class="tl"><b>${favs.includes(w.id)?'❤️':'🤍'}</b><span>مكتبتي</span></div></div>
+ <div class="card"><div class="rw"><div><b>التقييم</b><div class="mute">${avg(w)} من 10 · ${(RT[w.id]||{n:0}).n} تقييم</div></div><div class="stars">${[1,2,3,4,5].map(i=>`<button class="sb${((RT[w.id]||{}).mine||0)>=i*2?' on':''}" onclick="rate('${w.id}',${i*2})" aria-label="${i*2}">★</button>`).join('')}</div></div></div>
+ ${w.descr?`<div class="card"><div style="font-size:14px;color:#cdd3ea;white-space:pre-wrap">${esc(w.descr)}</div></div>`:''}
+ ${l.length?`<h2>الفصول</h2><div class="eps">${l.map(tile).join('')}</div>`:'<div class="card mute">لم تتم إضافة فصول بعد.</div>'}${commentsBlock()}`}
+async function rate(id,sc){const {error}=await sb.from('rd_ratings').upsert({user_id:session.id,work_id:id,score:sc});if(error)return toast('تعذر حفظ التقييم');
+ const o=RT[id]||(RT[id]={sum:0,n:0,mine:0});if(o.mine)o.sum-=o.mine;else o.n++;o.sum+=sc;o.mine=sc;toast('تم التقييم');workV()}
+/* reader */
+const setS=(k,v)=>{ST[k]=v;ls.set('rst',ST)};
+const THEMES={dark:['#0b0b0f','#e9e6df'],sepia:['#f1e7d0','#3b2f1e'],light:['#fafafa','#1b1b1b']};
+async function readV(){const c=chs.find(x=>x.id===arg);if(!c)return go('home');const w=works.find(x=>x.id===c.work_id),l=chOf(w),i=l.findIndex(x=>x.id===c.id),nx=l[i+1],pv=l[i-1];
+ $('#app').innerHTML='<div class="rbar"><button class="rb" onclick="go(\'work\',\''+w.id+'\')">→</button><b>'+esc(w.name)+'</b></div><div class="mute" style="padding:30px;text-align:center">جارٍ التحميل...</div>';
+ let body='';if(w.kind==='novel'){const {data}=await sb.from('rd_chapters').select('body').eq('id',c.id).maybeSingle();body=(data&&data.body)||''}
+ if(view!=='read'||arg!==c.id)return;
+ const paged=w.kind!=='novel'&&ST.mode==='p',pages=(c.pages||[]).map(pub),rtl=w.kind==='manga';
+ const ctl=w.kind==='novel'?`<button class="rb" onclick="fz(-1)">A-</button><button class="rb" onclick="fz(1)">A+</button><button class="rb" onclick="thm()">◐</button>`:`<button class="rb" onclick="setS('mode','${paged?'v':'p'}');readV()">${paged?'عمودي':'صفحات'}</button>`;
+ const th=THEMES[ST.theme]||THEMES.dark;
+ let main;
+ if(w.kind==='novel')main=`<article class="nv" style="background:${th[0]};color:${th[1]};font-size:${ST.size}px">${body.split(/\n+/).filter(x=>x.trim()).map(p=>`<p>${esc(p)}</p>`).join('')||'<p class="mute">الفصل فارغ.</p>'}</article>`;
+ else if(paged)main=`<div class="pgd" id="pgd" onclick="pgTap(event)"><img id="pimg" alt=""></div><div class="pn"><button class="rb" onclick="pgGo(${rtl?1:-1})">${rtl?'التالية':'السابقة'}</button><span class="mute" id="pi"></span><button class="rb" onclick="pgGo(${rtl?-1:1})">${rtl?'السابقة':'التالية'}</button></div>`;
+ else main=`<div class="pg">${pages.map(u=>`<img src="${esc(u)}" loading="lazy" alt="">`).join('')||'<div class="card mute">لا توجد صفحات.</div>'}</div>`;
+ $('#app').innerHTML=`<div class="rbar"><button class="rb" onclick="go('work','${w.id}')" aria-label="رجوع للعمل">→</button><button class="rb" onclick="go('home')" aria-label="خروج للرئيسية">✕</button><b>${esc(w.name)} · الفصل ${nf(c.num)}${c.title?' · '+esc(c.title):''}</b>${ctl}</div>${main}
+ <div class="cn">${pv?`<button class="btn g" onclick="go('read','${pv.id}')">السابق</button>`:''}${nx?`<button class="btn" onclick="go('read','${nx.id}')">الفصل التالي ▶</button>`:`<button class="btn g" onclick="go('work','${w.id}')">إنهاء</button>`}</div>`;
+ const sv=PG[c.id],start=sv&&!sv.done&&sv.pos>0.02?sv.pos:0;let fin=false;
+ if(paged){window.PGS={pages,i:Math.min(pages.length-1,Math.round(start*(pages.length-1))),id:c.id,rtl};pgShow();return}
+ const sc=()=>{const h=document.documentElement.scrollHeight-innerHeight,f=h>0?Math.min(1,scrollY/h):1;if(f>=0.97&&!fin){fin=true;setPg(c.id,1,true,true)}else if(!fin)setPg(c.id,f)};
+ let tm=0;window.onscroll=()=>{clearTimeout(tm);tm=setTimeout(sc,250)};
+ if(start){const g=()=>scrollTo({top:start*(document.documentElement.scrollHeight-innerHeight),behavior:'instant'});setTimeout(g,250);setTimeout(g,1300)}}
+function fz(d){setS('size',Math.max(14,Math.min(34,ST.size+d*2)));const a=$('.nv');if(a)a.style.fontSize=ST.size+'px'}
+function thm(){const k=Object.keys(THEMES);setS('theme',k[(k.indexOf(ST.theme)+1)%k.length]);const a=$('.nv'),t=THEMES[ST.theme];if(a){a.style.background=t[0];a.style.color=t[1]}}
+function pgShow(){const s=window.PGS;if(!s||!s.pages.length)return;$('#pimg').src=s.pages[s.i];$('#pi').textContent=(s.i+1)+' / '+s.pages.length;
+ const f=s.pages.length>1?s.i/(s.pages.length-1):1;if(s.i>=s.pages.length-1)setPg(s.id,1,true,true);else setPg(s.id,f);const n=s.pages[s.i+1];if(n)new Image().src=n}
+function pgGo(d){const s=window.PGS;if(!s)return;const n=s.i+d;if(n<0||n>=s.pages.length)return;s.i=n;pgShow();scrollTo({top:0,behavior:'instant'})}
+function pgTap(e){const s=window.PGS,r=e.currentTarget.getBoundingClientRect(),left=(e.clientX-r.left)<r.width/2;pgGo(s.rtl?(left?1:-1):(left?-1:1))}
+/* account */
+function accountV(){const dn=doneChs().length,ip=chs.filter(inProg).length,rec=Object.entries(PG).filter(([id])=>chs.some(c=>c.id===id)).sort((a,b)=>b[1].ts-a[1].ts).slice(0,5);
+ $('#app').innerHTML=`<div class="card" style="text-align:center"><div class="avl">${avH(session.name,session.avatar)}</div><h2 style="justify-content:center;margin:12px 0 2px">${esc(session.name)}</h2><div class="mute">@${esc(session.u)}${session.owner?' · 👑 المالك':session.admin?' · مشرف':''}</div></div>
+ <div class="tiles"><div class="tl"><b>${dn}</b><span>فصل قرأته</span></div><div class="tl"><b>${ip}</b><span>قيد المتابعة</span></div><div class="tl"><b>${Object.values(LST).filter(a=>a.length).length}</b><span>في مكتبتي</span></div></div>
+ ${profileCards()}
+ ${rec.length?`<h2>آخر ما قرأته</h2><div class="list">${rec.map(([id,p])=>{const c=chs.find(x=>x.id===id),w=works.find(x=>x.id===c.work_id);return `<div class="li" onclick="go('read','${id}')"><div class="grow"><h3>${esc(w.name)} · الفصل ${nf(c.num)}</h3><div class="mute">${p.done?'✓ تمت القراءة':'وصلت إلى '+Math.round(p.pos*100)+'%'}</div></div>${p.done?'':'<span class="tag" style="color:var(--lime)">أكمل</span>'}</div>`}).join('')}</div>`:''}`}
+async function saveName(){const n=$('#nm').value.trim().replace(/\s+/g,' ');if(n.length<2)return toast('اكتب اسمًا صحيحًا');
+ const {error}=await sb.rpc('update_my_name',{n});if(error)return toast('تعذر حفظ الاسم');session.name=n;toast('تم حفظ الاسم');render()}
+/* admin */
+function adminV(){if(!session.admin)return go('home');
+ if(!selW||!works.some(w=>w.id===selW))selW=works[0]&&works[0].id;const sw=works.find(w=>w.id===selW);
+ $('#app').innerHTML=`<div class="chips" style="margin-top:10px">${[['w','➕ عمل جديد'],['c','📄 إضافة فصل'],['m','🗂 المحتوى'],['u','👥 المستخدمون'],...(session.owner?[['n','📢 الإعلانات'],['s','🛡 الأمان']]:[])].map(([k,n])=>`<button class="${asec===k?'on':''}" onclick="asec='${k}';adminV()">${n}</button>`).join('')}</div>
+ <div ${asec==='w'?'':'hidden'}><div class="card"><label>اسم العمل</label><input id="wn"><label>النوع</label><select id="wk">${Object.entries(KIND).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select>
+ <label>القسم</label><input id="wc" list="cl" placeholder="مثال: أكشن، رومانسي، خيال"><datalist id="cl">${[...new Set(works.map(w=>w.category))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
+ <label>الوصف</label><textarea id="wd" rows="3"></textarea><label>صورة الغلاف (اختياري)</label><input id="wp" type="file" accept="image/*"><button class="btn" onclick="addWork()">حفظ العمل</button></div></div>
+ <div ${asec==='c'?'':'hidden'}><div class="card">${works.length?`<label>العمل</label><select id="cw" onchange="selW=this.value;adminV()">${works.map(w=>`<option value="${w.id}"${w.id===selW?' selected':''}>${esc(w.name)} (${KIND[w.kind]})</option>`).join('')}</select>
+ <div class="rw"><div style="flex:1"><label>رقم الفصل</label><input id="cn" type="number" step="any" min="0" value="${sw?nf((chOf(sw).slice(-1)[0]||{num:0}).num+1):1}"></div><div style="flex:2"><label>عنوان (اختياري)</label><input id="ct"></div></div>
+ ${sw&&sw.kind==='novel'?`<label>نص الفصل</label><textarea id="cb" rows="8"></textarea><label>أو ارفع ملف نصي (.txt)</label><input id="cf" type="file" accept=".txt,text/plain">`:`<label>صور الفصل (حدد كل الصفحات دفعة واحدة، وتترتب بالأسماء)</label><input id="ci" type="file" accept="image/*" multiple>`}
+ <button class="btn" onclick="addCh()">حفظ الفصل</button>`:'<div class="mute">أضف عملًا أولًا.</div>'}</div></div>
+ <div ${asec==='m'?'':'hidden'}>${works.length?works.map(w=>{const l=chOf(w),op=openW===w.id;return `<div class="list" style="margin-bottom:12px"><div class="li" style="cursor:default"><div class="grow" onclick="openW=${op?'null':`'${w.id}'`};adminV()" style="cursor:pointer"><h3>${esc(w.name)} ${op?'▴':'▾'}</h3><div class="mute">${KIND[w.kind]} · ${l.length} فصل · اضغط لعرض الفصول</div></div><button class="btn r s" style="margin:0" onclick="delWork('${w.id}')">حذف العمل</button></div>${op?(l.length?l.map(c=>`<div class="li" style="cursor:default;background:#ffffff06"><div class="grow"><h3>الفصل ${nf(c.num)}</h3><div class="mute">${esc(c.title||'')}${c.pages?' · '+c.pages.length+' صفحة':''}</div></div><button class="btn r s" style="margin:0" onclick="delCh('${c.id}')">حذف</button></div>`).join(''):'<div class="li mute">لا توجد فصول.</div>'):''}</div>`}).join(''):'<div class="card mute">لا يوجد محتوى.</div>'}</div>
+ <div ${asec==='n'&&session.owner?'':'hidden'}>${session.owner?annAdmin():''}</div><div ${asec==='s'&&session.owner?'':'hidden'}><div id="sc"></div></div><div ${asec==='u'?'':'hidden'}><div id="ub"><div class="mute">جارٍ التحميل...</div></div></div>`;
+ if(asec==='u')loadUsers();if(asec==='s'&&session.owner)secLoad()}
+async function addWork(){const n=$('#wn').value.trim(),f=$('#wp').files[0];if(!n)return toast('اكتب الاسم');const id='w'+Date.now();let cp=null;
+ if(f){if(f.size>5*1048576)return toast('الصورة أكبر من 5 ميجا');cp='covers/'+id+'.'+ext(f);const up=await sb.storage.from('reader').upload(cp,f,{contentType:f.type});if(up.error)return toast('تعذر رفع الغلاف')}
+ const row={id,name:n,kind:$('#wk').value,category:$('#wc').value.trim()||'عام',descr:$('#wd').value.trim(),cover_path:cp};
+ const {error}=await sb.from('rd_works').insert(row);if(error)return toast('تعذر الحفظ');works.unshift(row);selW=id;asec='c';toast('تمت الإضافة');adminV()}
+async function addCh(){const w=works.find(x=>x.id===$('#cw').value);if(!w)return;const num=parseFloat($('#cn').value);if(!(num>=0))return toast('رقم الفصل غير صحيح');
+ const id='c'+Date.now(),row={id,work_id:w.id,num,title:$('#ct').value.trim()||null};
+ if(w.kind==='novel'){let b=$('#cb').value;const f=$('#cf').files[0];if(f)b=await f.text();if(!b.trim())return toast('اكتب نص الفصل أو اختر ملف نصي');row.body=b}
+ else{const fl=[...$('#ci').files];if(!fl.length)return toast('اختر صور الفصل');const big=fl.find(x=>x.size>50*1048576);if(big)return toast('الصورة '+big.name+' أكبر من 50 ميجا');
+  fl.sort(numSort);const paths=[];
+  for(let i=0;i<fl.length;i++){toast('جارٍ رفع '+(i+1)+' من '+fl.length+'...');const p='pages/'+id+'/'+String(i+1).padStart(3,'0')+'.'+ext(fl[i]);
+   const up=await sb.storage.from('reader').upload(p,fl[i],{contentType:fl[i].type||'image/jpeg'});if(up.error){if(paths.length)await sb.storage.from('reader').remove(paths);return toast('تعذر رفع '+fl[i].name)}paths.push(p)}
+  row.pages=paths}
+ const {error}=await sb.from('rd_chapters').insert(row);if(error){if(row.pages)await sb.storage.from('reader').remove(row.pages);return toast('تعذر الحفظ')}
+ chs.push({id,work_id:w.id,num,title:row.title,pages:row.pages||null,created_at:new Date().toISOString()});toast('تمت إضافة الفصل');adminV()}
+function delCh(id){yes('حذف هذا الفصل؟',async()=>{const c=chs.find(x=>x.id===id);if(c&&c.pages&&c.pages.length)await sb.storage.from('reader').remove(c.pages);
+ const {error}=await sb.from('rd_chapters').delete().eq('id',id);if(error)return toast('تعذر الحذف');chs=chs.filter(x=>x.id!==id);delete PG[id];ls.set('rpg_'+session.id,PG);toast('تم الحذف');adminV()})}
+function delWork(id){yes('حذف العمل وكل فصوله؟',async()=>{const w=works.find(x=>x.id===id),paths=[];chs.filter(c=>c.work_id===id).forEach(c=>(c.pages||[]).forEach(p=>paths.push(p)));if(w.cover_path)paths.push(w.cover_path);
+ if(paths.length)await sb.storage.from('reader').remove(paths);const {error}=await sb.from('rd_works').delete().eq('id',id);if(error)return toast('تعذر الحذف');
+ works=works.filter(x=>x.id!==id);chs=chs.filter(c=>c.work_id!==id);if(openW===id)openW=null;toast('تم الحذف');adminV()})}
+let UL=[],UC={};
+async function loadUsers(){const box=$('#ub');if(!box)return;
+ const [a,b]=await Promise.all([sb.from('profiles').select('id,username,full_name,is_admin,created_at').order('created_at'),sb.from('rd_progress').select('user_id,done')]);
+ if(a.error)return box.innerHTML='<div class="card mute">تعذر تحميل المستخدمين</div>';
+ UC={};(b.data||[]).forEach(x=>{if(x.done)UC[x.user_id]=(UC[x.user_id]||0)+1});UL=a.data||[];drawUsers()}
+function drawUsers(){const box=$('#ub');if(!box)return;const q=($('#uq')?$('#uq').value:'').trim().toLowerCase(),tot=Object.values(UC).reduce((x,y)=>x+y,0);
+ const l=UL.filter(u=>!q||(u.full_name+' '+u.username).toLowerCase().includes(q));
+ box.innerHTML=`<div class="tiles"><div class="tl"><b>${UL.length}</b><span>مستخدم مسجّل</span></div><div class="tl"><b>${UL.filter(u=>u.is_admin).length}</b><span>مشرف</span></div><div class="tl"><b>${tot}</b><span>فصل مُشاهدة</span></div></div>
+ <input id="uq" placeholder="ابحث بالاسم أو اسم المستخدم" value="${esc(q)}" oninput="drawUsers()" style="margin:0 0 10px">
+ <div class="list">${l.map(u=>`<div class="li" style="cursor:default"><div class="grow"><h3>${esc(u.full_name)}</h3><div class="mute">@${esc(u.username)}${u.is_admin?' · مشرف':''} · ${UC[u.id]||0} فصل · انضم ${new Date(u.created_at).toLocaleDateString('ar-EG')}</div></div>${u.id===session.id?'<span class="tag">أنت</span>':`<button class="btn ${u.is_admin?'r':''} s" style="margin:0" onclick="setAdmin('${u.id}',${!u.is_admin})">${u.is_admin?'إزالة الإشراف':'تعيين مشرف'}</button>`}</div>`).join('')||'<div class="li mute">لا يوجد مستخدمون.</div>'}</div>`;
+ const i=$('#uq');if(q&&i){i.focus();i.setSelectionRange(q.length,q.length)}}
+function setAdmin(id,v){const u=UL.find(x=>x.id===id);if(!u)return;
+ yes(v?'تعيين '+u.full_name+' مشرفًا؟ سيقدر يضيف ويحذف المحتوى ويعيّن مشرفين آخرين.':'إزالة الإشراف عن '+u.full_name+'؟',async()=>{
+  const {error}=await sb.from('profiles').update({is_admin:v}).eq('id',id);if(error)return toast('تعذر التعديل');toast(v?'تم التعيين كمشرف':'تمت إزالة الإشراف');loadUsers()},v?'نعم، عيّنه':'نعم، أزل')}
+const SITE='read',CM_TABLE='rd_comments',CM_KEY='work_id',LIST_TABLE='rd_lists',LIST_KEY='work_id',PR_TABLE='rd_progress',PR_COLS='user_id,done',PR_DONE=x=>x.done,UNIT='فصل';
+/* ===== مشترك: أدوار الموقع، الصورة الشخصية، كلمة المرور، التعليقات، القوائم ===== */
+async function startSession(u){
+ const {data:p}=await sb.from('profiles').select('*').eq('id',u.id).maybeSingle();
+ if(!p){await sb.auth.signOut();return false}
+ const jr=await sb.from('site_members').upsert({user_id:u.id,site:SITE},{onConflict:'user_id,site',ignoreDuplicates:true});
+ if(jr.error){const mm=await sb.from('site_members').select('user_id').eq('user_id',u.id).eq('site',SITE).maybeSingle();if(!mm.data){await sb.auth.signOut();JOINERR=true;return false}}
+ const {data:r}=await sb.from('site_roles').select('role,can_manage').eq('user_id',u.id).eq('site',SITE).maybeSingle();
+ session={id:u.id,u:p.username,name:p.full_name,avatar:p.avatar_path,admin:!!r,owner:!!r&&r.role==='owner',manage:!!r&&(r.role==='owner'||!!r.can_manage)};
+ favs=[];await load();return true}
+const avUrl=p=>sb.storage.from('avatars').getPublicUrl(p).data.publicUrl;
+const avH=(n,p)=>p?`<img src="${esc(avUrl(p))}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`:esc((n||'?')[0]);
+function profileCards(){return `<div class="card"><label>الصورة الشخصية</label><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px"><label class="btn g s" style="margin:0;cursor:pointer">📷 اختيار صورة<input type="file" accept="image/*" hidden onchange="uploadAvatar(this.files[0])"></label>${session.avatar?'<button class="btn r s" style="margin:0" onclick="removeAvatar()">حذف الصورة</button>':''}</div></div>
+ <div class="card"><label>تعديل الاسم</label><input id="nm" value="${esc(session.name)}" maxlength="60"><button class="btn" onclick="saveName()">حفظ الاسم</button></div>
+ <div class="card"><label>تغيير كلمة المرور</label><input id="pw1" type="password" dir="ltr" placeholder="كلمة المرور الجديدة"><input id="pw2" type="password" dir="ltr" placeholder="تأكيد كلمة المرور"><button class="btn g" onclick="changePw()">تغيير كلمة المرور</button></div>`}
+async function uploadAvatar(f){if(!f)return;if(!f.type.startsWith('image/'))return toast('اختر ملف صورة');if(f.size>2*1048576)return toast('الصورة أكبر من 2 ميجا');
+ const p=session.id+'/'+Date.now()+'.'+((f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg');
+ const up=await sb.storage.from('avatars').upload(p,f,{contentType:f.type});if(up.error)return toast('تعذر رفع الصورة');
+ const {error}=await sb.rpc('update_my_avatar',{p});if(error)return toast('تعذر حفظ الصورة');
+ const old=session.avatar;session.avatar=p;if(old)sb.storage.from('avatars').remove([old]);toast('تم تحديث الصورة');render()}
+async function removeAvatar(){const old=session.avatar;const {error}=await sb.rpc('update_my_avatar',{p:null});if(error)return toast('تعذر الحذف');
+ if(old)sb.storage.from('avatars').remove([old]);session.avatar=null;toast('تم حذف الصورة');render()}
+async function changePw(){const a=$('#pw1').value,b=$('#pw2').value;if(!pwOk(a))return toast(PWMSG);if(a!==b)return toast('كلمتا المرور غير متطابقتين');
+ const {error}=await sb.auth.updateUser({password:a});if(error)return toast('تعذر تغيير كلمة المرور');$('#pw1').value='';$('#pw2').value='';toast('تم تغيير كلمة المرور')}
+/* التعليقات */
+let CMS=[],CMT=null,CMP={},CMD='',CMSP=false,CMSEL=null,REV={};
+const STK=['😂','😭','😍','🔥','👏','😱','💀','❤️','🤯','🥹','😡','👍'];
+function cmItem(c){const p=CMP[c.user_id]||{},hid=c.spoiler&&!REV[c.id];
+ return `<div class="cmi"><div class="av2">${avH(p.full_name,p.avatar_path)}</div><div class="cmb"><div class="rw"><b>${esc(p.full_name||'مستخدم')}</b><span class="mute">${new Date(c.created_at).toLocaleDateString('ar-EG')}</span></div>${hid?`<button class="spl" onclick="REV[${c.id}]=1;cmRefresh()">⚠ هذا التعليق يحتوي على حرق — اضغط لإظهاره</button>`:`${c.spoiler?'<span class="tag" style="color:#ffb86b">حرق</span>':''}${c.body?`<div class="cmt-body">${esc(c.body)}</div>`:''}${c.sticker?`<div class="stk">${esc(c.sticker)}</div>`:''}`}${(c.user_id===session.id||session.admin)?`<button class="x" style="margin-top:6px" onclick="delComment(${c.id})">حذف</button>`:''}</div></div>`}
+function cmInner(){return `<h2>التعليقات (${CMS.length})</h2>${cmOff()?'<div class="card mute">التعليقات متوقفة مؤقتًا.</div>':''}<div class="card" ${cmOff()?'hidden':''}><textarea id="cmt" rows="2" maxlength="500" placeholder="اكتب تعليقك..." oninput="CMD=this.value" style="margin:0">${esc(CMD)}</textarea>
+ <div class="skp" style="margin-top:8px">${STK.map(s=>`<button type="button" class="${CMSEL===s?'on':''}" onclick="CMSEL=CMSEL==='${s}'?null:'${s}';cmRefresh()">${s}</button>`).join('')}</div>
+ <label style="display:flex;align-items:center;gap:8px;margin-top:10px"><input type="checkbox" id="cms" style="width:auto;margin:0" ${CMSP?'checked':''} onchange="CMSP=this.checked"> ⚠ هذا التعليق يحتوي على حرق</label>
+ <button class="btn" onclick="postComment()">نشر التعليق${CMSEL?' '+CMSEL:''}</button></div>
+ <div class="card" style="padding:4px 16px">${CMS.length?CMS.map(cmItem).join(''):'<div class="mute" style="padding:14px 0">لا توجد تعليقات بعد. كن أول من يعلّق!</div>'}</div>`}
+const commentsBlock=()=>`<div id="cmwrap">${cmInner()}</div>`;
+function cmRefresh(){const w=$('#cmwrap');if(w)w.innerHTML=cmInner()}
+async function cmProfiles(){const ids=[...new Set(CMS.map(c=>c.user_id))].filter(i=>!CMP[i]);if(!ids.length)return;
+ const {data}=await sb.rpc('profiles_basic',{ids});(data||[]).forEach(p=>{CMP[p.id]=p})}
+async function loadComments(id){const {data}=await sb.from(CM_TABLE).select('*').eq(CM_KEY,id).order('created_at',{ascending:false}).limit(100);
+ if(CMT!==id)return;CMS=data||[];await cmProfiles();if(CMT===id)cmRefresh()}
+async function postComment(){const body=($('#cmt').value||'').trim();if(!body&&!CMSEL)return toast('اكتب تعليقًا أو اختر ملصقًا');
+ const {data,error}=await sb.from(CM_TABLE).insert({[CM_KEY]:CMT,user_id:session.id,body,spoiler:CMSP,sticker:CMSEL}).select().single();
+ if(error)return toast('تعذر نشر التعليق');CMS.unshift(data);CMP[session.id]={id:session.id,full_name:session.name,avatar_path:session.avatar};CMD='';CMSP=false;CMSEL=null;cmRefresh()}
+function delComment(id){yes('حذف هذا التعليق؟',async()=>{const {error}=await sb.from(CM_TABLE).delete().eq('id',id);if(error)return toast('تعذر الحذف');CMS=CMS.filter(c=>c.id!==id);cmRefresh()})}
+/* القوائم */
+async function toggleList(id,st){const on=inList(id,st),ex=st==='want'?'notwant':st==='notwant'?'want':null;let res;
+ if(on)res=await sb.from(LIST_TABLE).delete().eq('user_id',session.id).eq(LIST_KEY,id).eq('status',st);
+ else{if(ex&&inList(id,ex)){const d=await sb.from(LIST_TABLE).delete().eq('user_id',session.id).eq(LIST_KEY,id).eq('status',ex);if(d.error)return toast('تعذر التحديث');LST[id]=(LST[id]||[]).filter(x=>x!==ex)}
+  res=await sb.from(LIST_TABLE).insert({user_id:session.id,[LIST_KEY]:id,status:st})}
+ if(res.error)return toast('تعذر التحديث');
+ LST[id]=on?(LST[id]||[]).filter(x=>x!==st):[...(LST[id]||[]),st];syncFavs();
+ toast(on?'تمت الإزالة من '+LS_NAMES[st][1]:'تمت الإضافة إلى '+LS_NAMES[st][1]);
+ if(view==='title')titleV();else if(view==='work')workV();else if(view==='mylist')myV()}
+/* إدارة المستخدمين والمشرفين (مفصولة لكل موقع) */
+async function loadUsers(){const box=$('#ub');if(!box)return;
+ const [a,b]=await Promise.all([sb.rpc('site_users',{s:SITE}),sb.from(PR_TABLE).select(PR_COLS)]);
+ if(a.error)return box.innerHTML='<div class="card mute">تعذر تحميل المستخدمين</div>';
+ UC={};(b.data||[]).forEach(x=>{if(PR_DONE(x))UC[x.user_id]=(UC[x.user_id]||0)+1});UL=a.data||[];drawUsers()}
+const roleTxt=u=>u.role==='owner'?'👑 المالك':u.role==='admin'?(u.can_manage?'⭐ مشرف · يدير المشرفين':'مشرف'):'عضو';
+function drawUsers(){const box=$('#ub');if(!box)return;const q=($('#uq')?$('#uq').value:'').trim().toLowerCase(),tot=Object.values(UC).reduce((x,y)=>x+y,0);
+ const l=UL.filter(u=>!q||(u.full_name+' '+u.username).toLowerCase().includes(q));
+ const bt=(t,fn,c)=>`<button class="btn ${c||''} s" style="margin:6px 0 0 6px" onclick="${fn}">${t}</button>`;
+ const acts=u=>{if(u.id===session.id)return '<span class="tag">أنت</span>';if(u.role==='owner')return '';let h='';
+  if(session.manage){if(!u.role)h+=bt('تعيين مشرف',`setAdmin('${u.id}',true)`);else if(!u.can_manage||session.owner)h+=bt('إزالة الإشراف',`setAdmin('${u.id}',false)`,'r')}
+  if(session.owner&&u.role==='admin')h+=bt(u.can_manage?'سحب صلاحية إدارة المشرفين':'منح صلاحية إدارة المشرفين',`setManager('${u.id}',${!u.can_manage})`,'g');return h};
+ box.innerHTML=`<div class="tiles"><div class="tl"><b>${UL.length}</b><span>مستخدم</span></div><div class="tl"><b>${UL.filter(u=>u.role).length}</b><span>مشرف</span></div><div class="tl"><b>${tot}</b><span>${UNIT} مُشاهدة</span></div></div>
+ <input id="uq" placeholder="ابحث بالاسم أو اسم المستخدم" value="${esc(q)}" oninput="drawUsers()" style="margin:0 0 10px">
+ <div class="list">${l.map(u=>`<div class="li" style="cursor:default;align-items:flex-start"><div class="av2">${avH(u.full_name,u.avatar_path)}</div><div class="grow"><h3>${esc(u.full_name)}</h3><div class="mute">@${esc(u.username)} · ${roleTxt(u)} · ${UC[u.id]||0} ${UNIT}</div><div>${acts(u)}</div></div></div>`).join('')||'<div class="li mute">لا يوجد مستخدمون.</div>'}</div>
+ <div class="mute" style="margin-top:10px">${!session.manage?'عرض فقط: تعيين المشرفين متاح لمن يملك صلاحية إدارة المشرفين.':session.owner?'أنت المالك: تتحكم في تعيين المشرفين ومنح صلاحية إدارتهم.':'يمكنك تعيين المشرفين وإزالتهم، لكن لا تتحكم في المالك ولا في من يملك صلاحية إدارة المشرفين.'}</div>`;
+ const i=$('#uq');if(q&&i){i.focus();i.setSelectionRange(q.length,q.length)}}
+function setAdmin(id,v){const u=UL.find(x=>x.id===id);if(!u)return;
+ yes(v?'تعيين '+u.full_name+' مشرفًا؟ سيقدر يضيف ويحذف المحتوى في هذا الموقع فقط.':'إزالة الإشراف عن '+u.full_name+'؟',async()=>{
+  const {error}=await sb.rpc('set_site_admin',{target:id,s:SITE,make:v});if(error)return toast('غير مسموح لك بهذا الإجراء');toast(v?'تم التعيين كمشرف':'تمت إزالة الإشراف');loadUsers()},v?'نعم، عيّنه':'نعم، أزل')}
+function setManager(id,v){const u=UL.find(x=>x.id===id);if(!u)return;
+ yes(v?'منح '+u.full_name+' صلاحية تعيين وإزالة المشرفين؟':'سحب صلاحية إدارة المشرفين من '+u.full_name+'؟',async()=>{
+  const {error}=await sb.rpc('set_site_manager',{target:id,s:SITE,v});if(error)return toast('هذا الإجراء للمالك فقط');toast(v?'تم منح الصلاحية':'تم سحب الصلاحية');loadUsers()},v?'نعم، امنحه':'نعم، اسحبها')}
+
+/* الإعلانات */
+let ANN=[];
+const annSort=(a,b)=>(Number(b.pinned)-Number(a.pinned))||(Date.parse(b.created_at)-Date.parse(a.created_at));
+async function loadAnn(){const {data}=await sb.from('site_announcements').select('*').limit(80);ANN=(data||[]).sort(annSort)}
+const annHere=()=>ANN.filter(a=>a.site==='both'||a.site===SITE);
+const annDate=d=>new Date(d).toLocaleDateString('ar-EG',{day:'numeric',month:'short'});
+function annBlock(){const l=annHere();if(!l.length)return '';const pin=l.filter(a=>a.pinned),rest=l.filter(a=>!a.pinned).slice(0,3);
+ return `<div class="ann">${[...pin,...rest].map(a=>`<div class="an${a.pinned?' pin':''}"><div class="rw"><b>${a.pinned?'📌 ':'📢 '}${esc(a.title||'إعلان')}</b><span class="mute">${annDate(a.created_at)}</span></div><div class="ab">${esc(a.body)}</div></div>`).join('')}</div>`}
+function annAdmin(){const other=SITE==='watch'?'read':'watch';
+ return `<div class="card"><label>عنوان (اختياري)</label><input id="an_t" maxlength="80"><label>نص الإعلان</label><textarea id="an_b" rows="4" maxlength="1000" placeholder="اكتب ما تريد أن يظهر في الرئيسية..."></textarea>
+ <label>أين يظهر؟</label><select id="an_s"><option value="both">الموقعين</option><option value="${SITE}">هذا الموقع فقط</option><option value="${other}">${other==='read'?'القارئ':'Watch'} فقط</option></select>
+ <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="an_p" style="width:auto;margin:0"> 📌 تثبيت في أعلى الرئيسية</label><button class="btn" onclick="addAnn()">نشر الإعلان</button></div>
+ <div class="list">${ANN.map(a=>`<div class="li" style="cursor:default;align-items:flex-start"><div class="grow"><h3>${a.pinned?'📌 ':''}${esc(a.title||'إعلان')}</h3><div class="mute" style="white-space:pre-wrap">${esc(a.body.slice(0,140))}${a.body.length>140?'…':''}</div><div class="mute">${a.site==='both'?'الموقعين':a.site===SITE?'هذا الموقع':'الموقع الآخر'} · ${annDate(a.created_at)}</div><div><button class="btn g s" onclick="pinAnn(${a.id},${!a.pinned})">${a.pinned?'إلغاء التثبيت':'📌 تثبيت'}</button><button class="btn r s" onclick="delAnn(${a.id})">حذف</button></div></div></div>`).join('')||'<div class="li mute">لا توجد إعلانات.</div>'}</div>`}
+async function addAnn(){const b=$('#an_b').value.trim();if(!b)return toast('اكتب نص الإعلان');
+ const {data,error}=await sb.from('site_announcements').insert({site:$('#an_s').value,title:$('#an_t').value.trim()||null,body:b,pinned:$('#an_p').checked}).select().single();
+ if(error)return toast('غير مسموح، الإعلانات للمالك فقط');ANN.push(data);ANN.sort(annSort);toast('تم النشر');adminV()}
+async function pinAnn(id,v){const {error}=await sb.from('site_announcements').update({pinned:v}).eq('id',id);if(error)return toast('تعذر التحديث');
+ const a=ANN.find(x=>x.id===id);if(a)a.pinned=v;ANN.sort(annSort);toast(v?'تم التثبيت':'أُلغي التثبيت');adminV()}
+function delAnn(id){yes('حذف هذا الإعلان؟',async()=>{const {error}=await sb.from('site_announcements').delete().eq('id',id);if(error)return toast('تعذر الحذف');ANN=ANN.filter(x=>x.id!==id);adminV()})}
+
+/* ===== مركز الأمان (للمالك فقط) + حالة الموقع للمستخدمين ===== */
+let SEC={lockdown:false,comments_enabled:true,signups_open:true,message:null},BAN=null,JOINERR=false;
+const cmOff=()=>!SEC.comments_enabled&&!(session&&session.admin);
+const incomplete=()=>{const m=JOINERR?'الانضمام لهذا الموقع غير متاح حاليًا (التسجيل مغلق أو الحساب موقوف)':'الحساب غير مكتمل';JOINERR=false;toast(m)};
+async function secState(uid){
+ const a=await sb.from('site_security').select('lockdown,comments_enabled,signups_open,message').eq('site',SITE).maybeSingle();
+ SEC=a.data||{lockdown:false,comments_enabled:true,signups_open:true,message:null};
+ const b=await sb.from('site_bans').select('reason,until').eq('user_id',uid).eq('site',SITE).maybeSingle();
+ BAN=b.data&&(!b.data.until||new Date(b.data.until)>new Date())?b.data:null;
+ session.blocked=session.owner?null:BAN?'ban':(SEC.lockdown&&!session.admin?'lock':null)}
+function blockedV(){const ban=session.blocked==='ban';$('#nav').style.display='none';
+ $('#app').innerHTML=`<div class="card" style="text-align:center;padding:36px 20px"><div style="font-size:54px">${ban?'⛔':'🔒'}</div><h2 style="justify-content:center">${ban?'تم إيقاف حسابك':'الموقع مغلق مؤقتًا'}</h2><div class="mute" style="white-space:pre-wrap">${ban?esc(BAN.reason||'لم يُذكر سبب.')+(BAN.until?'\nحتى '+new Date(BAN.until).toLocaleDateString('ar-EG'):'\nالإيقاف دائم.'):esc(SEC.message||'نعمل على الصيانة، يرجى المحاولة لاحقًا.')}</div><button class="btn g" onclick="logout()">تسجيل الخروج</button></div>`}
+let secSite=SITE,secCfg=null,secU=[],secA=[],secQ='';
+const SITE_NAMES={watch:'Watch',read:'القارئ'};
+const SEC_ACT={ban:'🚫 حظر مستخدم',unban:'✅ فك حظر',settings:'⚙️ تغيير إعدادات الأمان',revoke_sessions:'📴 إنهاء جلسات مستخدم',delete_account:'🗑 حذف حساب',role_set:'🛡 تعيين مشرف',role_changed:'🛡 تعديل صلاحيات مشرف',role_removed:'🛡 إزالة مشرف'};
+const SEC_TBL={lib_titles:'عمل',lib_videos:'فيديو',rd_works:'عمل',rd_chapters:'فصل',lib_comments:'تعليق',rd_comments:'تعليق'};
+async function secLoad(){const box=$('#sc');if(!box)return;box.innerHTML='<div class="mute" style="padding:12px">جارٍ التحميل...</div>';
+ const [c,u,a]=await Promise.all([sb.from('site_security').select('*').eq('site',secSite).maybeSingle(),sb.rpc('owner_users',{s:secSite}),sb.from('security_audit').select('*').or('site.eq.'+secSite+',site.is.null').order('id',{ascending:false}).limit(60)]);
+ if(u.error||c.error||!c.data){box.innerHTML='<div class="card mute">مركز الأمان غير مفعّل بعد في قاعدة البيانات. شغّل ملف owner-security.sql في Supabase أولًا.</div>';return}
+ secCfg=c.data;secU=u.data||[];secA=a.data||[];secDraw()}
+function secRow(x){const me=x.id===session.id,own=x.role==='owner',bd=hue(x.username);
+ const st=x.banned?`<span class="tag" style="background:#3a1c22;color:#ff8f93">محظور${x.ban_until?' حتى '+new Date(x.ban_until).toLocaleDateString('ar-EG'):' نهائيًا'}</span>`:'';
+ const acts=(me||own)?`<span class="tag">${me?'أنت':'مالك'}</span>`:`<div style="display:flex;gap:6px;flex-wrap:wrap">${x.banned?`<button class="btn g s" style="margin:0" onclick="secUnban('${x.id}')">فك الحظر</button>`:`<button class="btn r s" style="margin:0" onclick="secBanDlg('${x.id}')">حظر</button>`}<button class="btn g s" style="margin:0" onclick="secKick('${x.id}')">إنهاء الجلسات</button><button class="btn r s" style="margin:0" onclick="secDel('${x.id}')">حذف</button></div>`;
+ return `<div class="li" style="cursor:default;flex-wrap:wrap"><div style="flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;display:grid;place-items:center;font-weight:700;color:#fff;background:hsl(${bd} 55% 45%)">${avH(x.full_name,x.avatar_path)}</div><div class="grow"><h3>${esc(x.full_name)}</h3><div class="mute">@${esc(x.username)}${x.role?' · '+(own?'مالك':'مشرف'):''} ${st}</div></div>${acts}</div>`}
+function secLogRow(a){const d=a.detail||{};let det='';
+ if(a.action==='settings')det=(d.lockdown?'القفل مفعّل':'القفل متوقف')+' · '+(d.comments?'التعليقات مفتوحة':'التعليقات مغلقة')+' · '+(d.signups?'الانضمام مفتوح':'الانضمام مغلق');
+ else if(a.action==='ban')det=(d.reason||'بدون سبب')+' · '+(d.days?d.days+' يوم':'دائم');
+ else if(a.action==='delete_account')det='@'+(d.username||'');
+ else if(a.action.startsWith('delete_'))det=d.name||'';
+ const tb=a.action.startsWith('delete_')&&a.action!=='delete_account'?a.action.slice(7):'';
+ const label=SEC_ACT[a.action]||('🗑 حذف '+(SEC_TBL[tb]||'محتوى'));
+ return `<div class="li" style="cursor:default;align-items:flex-start"><div class="grow"><h3 style="font-size:14px">${label}${a.target_name?' · '+esc(a.target_name):''}</h3>${det?`<div class="mute">${esc(det)}</div>`:''}<div class="mute">بواسطة ${esc(a.actor_name||'—')} · ${new Date(a.at).toLocaleString('ar-EG')}</div></div></div>`}
+function secUList(){const b=$('#sc_ul');if(!b)return;const q=secQ.trim().toLowerCase(),l=secU.filter(x=>!q||(x.full_name+' '+x.username).toLowerCase().includes(q));
+ b.innerHTML=l.map(secRow).join('')||'<div class="li mute">لا يوجد مستخدمون.</div>'}
+function secDraw(){const box=$('#sc');if(!box)return;
+ box.innerHTML=`<div class="chips">${['watch','read'].map(s=>`<button class="${secSite===s?'on':''}" onclick="secSite='${s}';secLoad()">${SITE_NAMES[s]}${s===SITE?' (هنا)':''}</button>`).join('')}</div>
+ <div class="card"><h3>حالة ${SITE_NAMES[secSite]}</h3>
+ ${[['sc_l','lockdown','🔒 قفل الموقع (لا يدخله إلا المشرفون)'],['sc_c','comments_enabled','💬 السماح بالتعليقات'],['sc_s','signups_open','🆕 السماح بانضمام مستخدمين جدد']].map(([id,k,t])=>`<label style="display:flex;gap:10px;align-items:center;margin:10px 0;color:var(--ink);font-size:14px"><input type="checkbox" id="${id}" ${secCfg[k]?'checked':''} style="width:auto;margin:0"> ${t}</label>`).join('')}
+ <label>رسالة تظهر للمستخدمين أثناء القفل</label><textarea id="sc_m" rows="2" maxlength="300">${esc(secCfg.message||'')}</textarea>
+ <button class="btn" onclick="secSave()">حفظ الإعدادات</button></div>
+ <h2>المستخدمون (${secU.length})</h2><input id="sc_q" placeholder="ابحث بالاسم أو اسم المستخدم" value="${esc(secQ)}" oninput="secQ=this.value;secUList()" style="margin-bottom:10px">
+ <div class="list" id="sc_ul"></div>
+ <div class="rw"><h2>سجل الأحداث</h2><button class="btn g s" style="margin:0" onclick="secLoad()">تحديث</button></div>
+ <div class="list">${secA.map(secLogRow).join('')||'<div class="li mute">لا توجد أحداث بعد.</div>'}</div>`;
+ secUList()}
+async function secSave(){const {error}=await sb.rpc('owner_set_security',{s:secSite,p_lockdown:$('#sc_l').checked,p_comments:$('#sc_c').checked,p_signups:$('#sc_s').checked,p_msg:$('#sc_m').value});
+ if(error)return toast('تعذر الحفظ');toast('تم حفظ إعدادات الأمان');if(secSite===SITE)await secState(session.id);secLoad()}
+function secBanDlg(id){const u=secU.find(x=>x.id===id);if(!u)return;const o=document.createElement('div');o.className='ov';
+ o.innerHTML=`<div class="card"><h3>حظر ${esc(u.full_name)}</h3><label>المدة</label><select id="bn_d"><option value="1">يوم واحد</option><option value="7">7 أيام</option><option value="30">30 يومًا</option><option value="">دائم</option></select><label>السبب (يظهر له)</label><input id="bn_r" maxlength="200"><label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="bn_k" checked style="width:auto;margin:0"> إنهاء جلساته فورًا</label><div class="rw"><button class="btn r" id="bn_ok">حظر</button><button class="btn g" id="bn_no">إلغاء</button></div></div>`;
+ document.body.append(o);o.querySelector('#bn_no').onclick=()=>o.remove();
+ o.querySelector('#bn_ok').onclick=async()=>{const d=$('#bn_d').value,r=$('#bn_r').value,k=$('#bn_k').checked;o.remove();
+  const {error}=await sb.rpc('owner_ban',{target:id,s:secSite,p_reason:r,p_days:d===''?null:parseInt(d,10)});if(error)return toast('تعذر الحظر');
+  if(k)await sb.rpc('owner_revoke_sessions',{target:id});toast('تم الحظر');secLoad()}}
+async function secUnban(id){const {error}=await sb.rpc('owner_unban',{target:id,s:secSite});if(error)return toast('تعذر فك الحظر');toast('تم فك الحظر');secLoad()}
+function secKick(id){yes('إنهاء كل جلسات هذا المستخدم؟ سيحتاج لتسجيل الدخول من جديد.',async()=>{const {error}=await sb.rpc('owner_revoke_sessions',{target:id});if(error)return toast('تعذر التنفيذ');toast('تم إنهاء الجلسات');secLoad()},'نعم، أنهِها')}
+function secDel(id){const u=secU.find(x=>x.id===id);if(!u)return;yes('حذف حساب «'+u.full_name+'» نهائيًا مع كل بياناته في الموقعين؟ لا يمكن التراجع.',async()=>{const {error}=await sb.rpc('owner_delete_account',{target:id});if(error)return toast('تعذر الحذف');toast('تم حذف الحساب');secLoad()},'نعم، احذف الحساب')}
+/* ===== تطبيق (PWA): التسجيل، التثبيت، حالة الاتصال ===== */
+if('serviceWorker' in navigator)addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+let DEFER=null;
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+function showInstall(msg){if($('#inst')||isStandalone())return;const b=document.createElement('button');b.id='inst';b.className='inst';
+ if(msg){b.innerHTML='📲 ثبّت التطبيق<small>'+msg+'</small>';b.onclick=()=>{ls.set('iosHint',1);b.remove()}}
+ else{b.textContent='📲 ثبّت التطبيق';b.onclick=async()=>{try{DEFER.prompt();await DEFER.userChoice}catch(e){}DEFER=null;b.remove()}}
+ document.body.append(b)}
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();DEFER=e;showInstall()});
+addEventListener('appinstalled',()=>{DEFER=null;const b=$('#inst');if(b)b.remove();toast('تم تثبيت التطبيق')});
+addEventListener('offline',()=>toast('لا يوجد اتصال بالإنترنت'));
+addEventListener('online',()=>toast('عاد الاتصال'));
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!isStandalone()&&!ls.get('iosHint',0))setTimeout(()=>showInstall('اضغط زر المشاركة ثم "إضافة إلى الشاشة الرئيسية"'),2500);
+boot();
+</script>
+</body>
+</html>
