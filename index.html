@@ -14,8 +14,6 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <meta name="robots" content="noindex,nofollow">
-<style id="fb">html{display:none!important}</style>
-<script>if(self===top){var e=document.getElementById("fb");if(e)e.remove()}else{try{top.location=self.location}catch(x){}}</script>
 <title>القارئ</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;600&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -192,7 +190,8 @@ function setPg(id,pos,done,force){const n=Date.now(),o=PG[id];PG[id]={pos,done:!
 async function startSession(u){const {data:p}=await sb.from('profiles').select('*').eq('id',u.id).maybeSingle();
  if(!p){await sb.auth.signOut();return false}session={id:u.id,u:p.username,name:p.full_name,admin:p.is_admin};await secState(u.id);if(session.blocked)return true;
  favs=[];await load();return true}
-async function boot(){sb=supabase.createClient(SB_URL,SB_KEY);const {data}=await sb.auth.getSession();if(data.session)await startSession(data.session.user);render()}
+async function boot(){try{if(typeof supabase==='undefined')throw 1;sb=supabase.createClient(SB_URL,SB_KEY);const {data}=await sb.auth.getSession();if(data.session)await startSession(data.session.user)}catch(e){bootErr();return}render()}
+function bootErr(){$('#nav').style.display='none';$('#app').innerHTML='<div class="card" style="text-align:center;padding:36px 20px"><div style="font-size:48px">📡</div><h3>تعذر الاتصال</h3><div class="mute">تأكد من اتصالك بالإنترنت ثم حاول مرة أخرى</div><button class="btn" onclick="location.reload()">إعادة المحاولة</button></div>'}
 /* auth */
 function authV(){const r=mode==='up';$('#app').innerHTML=`<div class="auth">${LOGO}<h1>${r?'أهلاً بيك 👋':'مرحبًا بعودتك'}</h1><div class="mute" style="margin-bottom:18px">${r?'أنشئ حسابك وابدأ القراءة':'سجّل الدخول لمتابعة قراءتك'}</div></div><div class="card">
  ${r?'<label>الاسم</label><input id="an">':''}<label>اسم المستخدم (حروف إنجليزية وأرقام)</label><input id="au" dir="ltr" autocapitalize="none">
@@ -356,6 +355,7 @@ async function startSession(u){
  if(jr.error){const mm=await sb.from('site_members').select('user_id').eq('user_id',u.id).eq('site',SITE).maybeSingle();if(!mm.data){await sb.auth.signOut();JOINERR=true;return false}}
  const {data:r}=await sb.from('site_roles').select('role,can_manage').eq('user_id',u.id).eq('site',SITE).maybeSingle();
  session={id:u.id,u:p.username,name:p.full_name,avatar:p.avatar_path,admin:!!r,owner:!!r&&r.role==='owner',manage:!!r&&(r.role==='owner'||!!r.can_manage)};
+ await secState(u.id);if(session.blocked)return true;
  favs=[];await load();return true}
 const avUrl=p=>sb.storage.from('avatars').getPublicUrl(p).data.publicUrl;
 const avH=(n,p)=>p?`<img src="${esc(avUrl(p))}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`:esc((n||'?')[0]);
